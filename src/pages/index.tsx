@@ -1,9 +1,20 @@
 import type { NextPage } from 'next'
+import { useState } from "react";
 import Head from 'next/head'
 import Image from 'next/image'
+import React from 'react'
 import styles from '../styles/Home.module.css'
 
+type Count = {
+  count: number;
+}
+
 const Home: NextPage = () => {
+  const [ count, setCount ] = useState(0)
+  const handleClick = (e: any) => {
+    setCount(prevCount => prevCount ++);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,15 +23,19 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main classaName={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        
+        <button onClick={ handleClick }>++</button>
 
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
+
+        
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
