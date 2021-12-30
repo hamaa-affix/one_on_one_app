@@ -35,6 +35,40 @@ const Home: NextPage = () => {
 					alt={""}
 				/>
 			</div>
+			<div className="mt-24">
+				<div className="flex justify-center text-center">
+					{/* ここのdivタグはimageタグに変更します */}
+					<div className="w-96 h-96 bg-red-100">画像</div>
+					<div className="ml-6">
+						<h1 className="text-2xl">家族で思い出の時間を共有しましょう</h1>
+						<div className="mt-4">
+							<p>withでは家族の思い出の写真や動画を保存し家族間で共有できます。</p>
+						</div>
+					</div>
+				</div>
+				<div className="mt-24 flex justify-center text-center flex-row-reverse	">
+					{/* ここのdivタグはimageタグに変更します */}
+					<div className="w-96 h-96 bg-red-100 ml-6">画像</div>
+					<div>
+						<h3 className="text-2xl">写真や動画を手軽に通知できる</h3>
+						<div className="mt-4">
+							<p>画像や動画が保存されたら、パートナーへ自動通知してくれます。</p>
+						</div>
+					</div>
+				</div>
+				{ /*
+				<div>
+					ここのdivタグはimageタグに変更します
+					<div>画像</div>
+					<div>
+						<h3>家族で思い出の時間を共有しましょう</h3>
+					</div>
+					<div>
+						<p>withでは家族の思い出の写真や動画を保存し家族間で共有できます。</p>
+					</div>
+				</div>
+				*/}
+			</div>
 		</div>
 	)
 }
