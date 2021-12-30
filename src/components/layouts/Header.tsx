@@ -8,7 +8,7 @@ export const Header = () => {
             </div>
             <div className="flex h-full w-40 items-center bg-red-100">
                 <div className="mx-auto">
-                    <Link href="/">
+                    <Link href="/login">
                         <a>login</a>
                     </Link>
                 </div>
