@@ -1,6 +1,7 @@
 import React, { VFC, useState } from "react";
 import { useRouter } from 'next/router'
 import Link from "next/link"
+import { PrimaryButton } from "src/components/ui/button/PrimaryButton";
 
 export const Login = () => {
     const router = useRouter();
@@ -57,13 +58,13 @@ export const Login = () => {
                 />
             </div>
             <div className="mt-12">
-                <button
+                <PrimaryButton
                     type="button"
                     className="border w-24 p-1.5 rounded-md font-mono text-xs"
                     onClick={ handleSubmit }
                 >
                     ログイン
-                </button>
+                </PrimaryButton>
             </div>
             <div className="mt-10">
                 <p className="text-xs ">パスワードを忘れた場合はこちらを
