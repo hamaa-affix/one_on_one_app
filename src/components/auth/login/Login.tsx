@@ -59,9 +59,7 @@ export const Login = () => {
             </div>
             <div className="mt-12">
                 <PrimaryButton
-                    type="button"
-                    className="border w-24 p-1.5 rounded-md font-mono text-xs"
-                    onClick={ handleSubmit }
+                    onClick={ () => handleSubmit }
                 >
                     ログイン
                 </PrimaryButton>

@@ -1,8 +1,13 @@
+import { VFC, ReactNode } from "react";
 import Head from 'next/head';
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
-export const Layout = ({children}) => {
+type Props = {
+    children: ReactNode;
+}
+
+export const Layout: VFC<Props> = ({children}) => {
     return (
         <>
             <Head>
