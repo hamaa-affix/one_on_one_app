@@ -1,30 +1,29 @@
 import React, { VFC, useState } from "react";
-import { useRouter } from 'next/router'
+import { SubmitHandler, useForm } from "react-hook-form";
+import { NextRouter, useRouter } from 'next/router'
 import Link from "next/link"
 import { PrimaryButton } from "src/components/ui/button/PrimaryButton";
+import { readFile } from "fs";
 
-export const Login = () => {
-    const router = useRouter();
-    const [ formData, setFormData ] = useState({
-        email: "",
-        password: ""
+type FormInput = {
+    email: string;
+    password: string;
+}
+
+export const Login: VFC = () => {
+    const router: NextRouter = useRouter();
+    const { 
+        register,
+        handleSubmit, 
+        formState: { errors }
+    } = useForm({
+        mode: "onChange",
+        criteriaMode: "all",
+        shouldFocusError: false
     });
 
-    const handleEmail = (e) => {
-        if(e.target.value.length > 255) alert('メールアドレスは255文字以下入力してください');
-        setFormData({...formData, email: e.target.value });
-    }
-
-    const handlePassword = (e) => {
-        if(e.target.value.length > 8) alert("パスワードは８文字以下で入力してください");
-        setFormData({...formData, password: e.target.value});
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        alert("送信");
-        //仮で設定
-        router.push("/")
+    const onSubmit: SubmitHandler<FormInput> = (data: FormInput):void => {
+        console.log(data);
     }
 
     return (
@@ -42,9 +41,13 @@ export const Login = () => {
                 <input 
                     type="text"
                     className="border w-56 p-1.5 rounded-md ml-4"
-                    value={ formData.email }
-                    onChange={ handleEmail }
+                    {...register("email", {required: true, maxLength: 255, pattern: /^[a-zA-Z0-9-_\.]+@[a-zA-Z0-9-_\.]+$/})}
                 />
+            </div>
+            <div>
+                { errors.email?.types?.required && <p className="text-sm text-red-500">メールアドレスを入力してください</p> }
+                { errors.email?.types?.maxLength && <p className="text-sm text-red-500">メールアドレスは8文字以下で入力してください</p> }
+                { errors.email?.types?.pattern && <p className="text-sm text-red-500">メールアドレスは適切な形式で入力してください</p> }
             </div>
             <div>
                 <label className="font-mono text-sm" htmlFor="パスワード">
@@ -53,14 +56,16 @@ export const Login = () => {
                 <input 
                     type="password"
                     className="border w-56 p-1.5 rounded-md font-mono mt-10 ml-12"
-                    value={ formData.password }
-                    onChange={ handlePassword }
+                    {...register("password", {required: true, maxLength: 8, pattern: /^[a-zA-Z0-9]+$/})}
                 />
             </div>
+            <div>
+                { errors.password?.types?.required && <p className="text-sm text-red-500">passwordを入力してください</p> }
+                { errors.password?.types?.maxLength && <p className="text-sm text-red-500">passwordは8文字以下で入力してください</p> }
+                { errors.password?.types?.pattern && <p className="text-sm text-red-500">passwordは適切な形式で入力してください</p> }
+            </div>
             <div className="mt-12">
-                <PrimaryButton
-                    onClick={ () => handleSubmit }
-                >
+                <PrimaryButton onClick={handleSubmit(onSubmit)}>
                     ログイン
                 </PrimaryButton>
             </div>
