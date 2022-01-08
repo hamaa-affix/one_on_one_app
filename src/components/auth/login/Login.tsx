@@ -3,12 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { NextRouter, useRouter } from 'next/router'
 import Link from "next/link"
 import { PrimaryButton } from "src/components/ui/button/PrimaryButton";
-import { readFile } from "fs";
-
-type FormInput = {
-    email: string;
-    password: string;
-}
+import type { LoginInput } from "src/domains/Inorganic/types/FormTypes"
 
 export const Login: VFC = () => {
     const router: NextRouter = useRouter();
@@ -22,7 +17,7 @@ export const Login: VFC = () => {
         shouldFocusError: false
     });
 
-    const onSubmit: SubmitHandler<FormInput> = (data: FormInput):void => {
+    const onSubmit: SubmitHandler<LoginInput> = (data: LoginInput):void => {
         console.log(data);
     }
 
@@ -68,14 +63,6 @@ export const Login: VFC = () => {
                 <PrimaryButton onClick={handleSubmit(onSubmit)}>
                     ログイン
                 </PrimaryButton>
-            </div>
-            <div className="mt-10">
-                <p className="text-xs ">パスワードを忘れた場合はこちらを
-                    <span>
-                        { /**  遷移先を今後修正 */}
-                        <Link href="/"><a className="text-blue-500">クリック</a></Link>
-                    </span>
-                </p>
             </div>
         </form>
     );
