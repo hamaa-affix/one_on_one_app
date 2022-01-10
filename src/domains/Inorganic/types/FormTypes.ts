@@ -11,7 +11,7 @@ export type RegisterInput = {
     age: number;
     email: string;
     tel: string;
-    brithday: Date;
+    birthday: Date;
     password: string;
     attribute: number;
     comment: string;

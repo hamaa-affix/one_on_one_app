@@ -18,11 +18,6 @@ export const Register: VFC = () => {
 
     const onSubmit: SubmitHandler<RegisterInput> = (data: RegisterInput): void => {
         console.log(data);
-        console.log("hello")
-    }
-
-    const test = () => {
-        console.log("test")
     }
 
     return(
@@ -42,14 +37,14 @@ export const Register: VFC = () => {
                         <input 
                             type="text"
                             className="border w-56 p-1.5 rounded-md ml-4"
-                            {...register("lastName", {required: true, maxLength: 255, pattern: /^[a-zA-Z0-9-_\.]+@[a-zA-Z0-9-_\.]+$/})}
+                            {...register("lastName", {required: true, maxLength: 255})}
                         />
                     </div>
                     <div>
                         <input 
                             type="text"
                             className="border w-56 p-1.5 rounded-md ml-4"
-                            {...register("firstName", {required: true, maxLength: 255, pattern: /^[a-zA-Z0-9-_\.]+@[a-zA-Z0-9-_\.]+$/})}
+                            {...register("firstName", {required: true, maxLength: 255})}
                         />
                     </div>
                 </div>
@@ -76,6 +71,19 @@ export const Register: VFC = () => {
             </div>
             <div>
                 { errors.age?.types?.required && <p className="text-sm text-red-500">年齢を入力してください</p> }
+            </div>
+            <div className="mt-12 mr-64">
+                <label className="font-mono text-sm" htmlFor="年齢">
+                    誕生日
+                </label>
+                <input 
+                    type="date"
+                    className="border w-56 p-1.5 rounded-md ml-4"
+                    {...register("birthday", {required: true})}
+                />
+            </div>
+            <div>
+                { errors.birthday?.types?.required && <p className="text-sm text-red-500">生年月日を入力してください</p> }
             </div>
             <div  className="flex items-center justify-center mt-12">
                 <div className="">
@@ -112,6 +120,9 @@ export const Register: VFC = () => {
                     </label>
                 </div>
             </div>
+            <div>
+                { errors.attribute?.types?.required && <p className="text-sm text-red-500">家族属性を選択してください</p> }
+            </div>
             <div className="mt-12 mr-80">
                 <label className="font-mono text-sm" htmlFor="メールアドレス">
                     メールアドレス
@@ -124,7 +135,7 @@ export const Register: VFC = () => {
             </div>
             <div>
                 { errors.email?.types?.required && <p className="text-sm text-red-500">メールアドレスを入力してください</p> }
-                { errors.email?.types?.maxLength && <p className="text-sm text-red-500">メールアドレスは8文字以下で入力してください</p> }
+                { errors.email?.types?.maxLength && <p className="text-sm text-red-500">メールアドレスは255文字以下で入力してください</p> }
                 { errors.email?.types?.pattern && <p className="text-sm text-red-500">メールアドレスは適切な形式で入力してください</p> }
             </div>
             <div className="mt-12 mr-72">
@@ -138,7 +149,8 @@ export const Register: VFC = () => {
                 />
             </div>
             <div>
-                { errors.tel?.types?.maxLength && <p className="text-sm text-red-500">メールアドレスは11文字以下で入力してください</p> }
+                { errors.tel?.types?.required && <p className="text-sm text-red-500">電話番号を入力してください</p> }
+                { errors.tel?.types?.maxLength && <p className="text-sm text-red-500">電話番号は11文字以下のハイフンを含めず入力してください</p> }
             </div>
             <div className="mt-12 mr-72">
                 <label className="font-mono text-sm" htmlFor="パスワード">
