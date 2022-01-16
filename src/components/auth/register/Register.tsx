@@ -1,9 +1,9 @@
 import  React, { VFC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { appyRegisterUser } from "src/repositories/UserRepository"
 import { Form } from "src/components/ui/form/Form"
 import { PrimaryButton } from "src/components/ui/button/PrimaryButton"
 import type { RegisterInput } from "src/domains/Inorganic/types/FormTypes";
-
 
 export const Register: VFC = () => {
     const { 
@@ -16,8 +16,8 @@ export const Register: VFC = () => {
         shouldFocusError: false
     });
 
-    const onSubmit: SubmitHandler<RegisterInput> = (data: RegisterInput): void => {
-        console.log(data);
+    const onSubmit: SubmitHandler<RegisterInput> = async (data: RegisterInput): Promise<void> => {
+        const { message, status, user } = await appyRegisterUser(data); 
     }
 
     return(

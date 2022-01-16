@@ -1,18 +1,8 @@
 import type { NextPage } from 'next'
 import Image from 'next/image';
-import { useState } from "react";
-import React from 'react'
-import styles from '../styles/Home.module.css'
 
-type Count = {
-  count: number;
-}
 
 const Home: NextPage = () => {
-	const [ count, setCount ] = useState(0)
-	const handleClick = (e: any) => {
-		setCount(prevCount => prevCount ++);
-	}
 
 	return (
 		<div>
