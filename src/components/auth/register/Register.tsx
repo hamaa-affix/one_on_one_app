@@ -1,11 +1,17 @@
 import  React, { VFC } from "react";
+import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { appyRegisterUser } from "src/repositories/UserRepository"
+import { useRecoilState } from "recoil";
+import { appyRegisterUser } from "src/repositories/UserRepository";
+import { userToken } from "src/store/atoms/UserState";
 import { Form } from "src/components/ui/form/Form"
 import { PrimaryButton } from "src/components/ui/button/PrimaryButton"
 import type { RegisterInput } from "src/domains/Inorganic/types/FormTypes";
 
 export const Register: VFC = () => {
+    const [ token, setToken ] = useRecoilState(userToken);
+    const router = useRouter();
+
     const { 
         register,
         handleSubmit, 
@@ -17,7 +23,18 @@ export const Register: VFC = () => {
     });
 
     const onSubmit: SubmitHandler<RegisterInput> = async (data: RegisterInput): Promise<void> => {
-        const { message, status, user } = await appyRegisterUser(data); 
+        const { message, status, user } = await appyRegisterUser(data);
+
+        if (status === 200) {
+            setToken({
+                ...token,
+                accessToken: user?.original.access_token ?? "",
+                tokenType: user?.original.token_type ?? ""
+            });
+            router.push("/");
+        }
+
+        if(!(status === 200)) alert('登録に失敗しました'); 
     }
 
     return(

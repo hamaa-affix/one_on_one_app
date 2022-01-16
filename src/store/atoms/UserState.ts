@@ -1,14 +1,13 @@
-import { atom } from "recoil";
+import { atom, RecoilState } from "recoil";
+import type { UserToken } from "src/domains/user/Entity/UserType";
 
-export const userState = atom({
-    key: "userState",
+export const userToken: RecoilState<{
+    accessToken: string;
+    tokenType: string;
+}> = atom({
+    key: "token",
     default: {
-        id: 0,
-        fullName: "",
-        age: 0,
-        birthday: null,
-        attribute: "",
-        email: "",
-        tel: ""
+        accessToken: "",
+        tokenType: ""
     }
 })
