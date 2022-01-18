@@ -1,12 +1,17 @@
-import React, { VFC, useState } from "react";
+import React, { VFC } from "react";
+import {  useRecoilState } from "recoil";
+import { userToken } from "src/store/atoms/UserState";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NextRouter, useRouter } from 'next/router'
 import Link from "next/link"
 import { PrimaryButton } from "src/components/ui/button/PrimaryButton";
+import { login } from "src/repositories/UserRepository";
 import type { LoginInput } from "src/domains/Inorganic/types/FormTypes"
 
 export const Login: VFC = () => {
+    const [ token, setToken ] = useRecoilState(userToken);
     const router: NextRouter = useRouter();
+
     const { 
         register,
         handleSubmit, 
@@ -17,8 +22,17 @@ export const Login: VFC = () => {
         shouldFocusError: false
     });
 
-    const onSubmit: SubmitHandler<LoginInput> = (data: LoginInput):void => {
-        console.log(data);
+    const onSubmit: SubmitHandler<LoginInput> = async (data: LoginInput): Promise<void> => {
+        const { message, status, token } = await login(data);
+        
+        if(status === 200) {
+            setToken({
+                accessToken: token,
+                tokenType: "bear"
+            });
+        }
+
+        if(!(status === 200)) alert('ログインに失敗しました');
     }
 
     return (

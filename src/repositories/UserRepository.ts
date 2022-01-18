@@ -1,7 +1,7 @@
 import { config } from "src/libs/config"
 import useSWR from 'swr';
 import type { User, TokenFetch } from "src/domains/user/Entity/UserType";
-import type { RegisterInput } from "src/domains/Inorganic/types/FormTypes";
+import type { RegisterInput, LoginInput } from "src/domains/Inorganic/types/FormTypes";
 import axios, { AxiosResponse } from "axios";
 
 const api = axios.create({
@@ -27,6 +27,30 @@ export const useFetchUsers = ()  => {
         users: data,
         isLoading: !error && !data,
         isError: error
+    }
+}
+
+/**
+ * login
+ */
+type Login = () => Promise<{message: string, status: number, token: string} | undefined>
+
+export const login = async (data: LoginInput) => {
+    try {
+        const res: AxiosResponse<{message: string, status: number, token: string}> = await axios.post(config.apiPath + "api/login", data);
+        
+        const message = res.data.message;
+        const status = res.data.status;
+        const token = res.data.token;
+
+        return { message, status, token }
+    } catch(e) {
+        console.log(e);
+        const message = "can't login";
+        const status = 500;
+        const token = "";
+        
+        return { message, status, token }
     }
 }
 
