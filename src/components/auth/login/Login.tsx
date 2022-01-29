@@ -30,6 +30,9 @@ export const Login: VFC = () => {
                 accessToken: token,
                 tokenType: "bear"
             });
+            
+            alert(message);
+            router.push('/')
         }
 
         if(!(status === 200)) alert('ログインに失敗しました');
