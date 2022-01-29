@@ -1,31 +1,19 @@
 import { userToken } from "@/store/atoms/UserState";
 import Link  from "next/link";
 import { useRouter } from "next/router"
-import { useCallback, MouseEventHandler } from "react";
+import { useMemo } from "react";
 import { useRecoilState } from "recoil";
-import type { UserToken } from "src/domains/user/Entity/UserType";
-import { logout } from "src/repositories/UserRepository";
+import { userLogout } from "src/domains/user/UseCase/UserLogout";
 
 export const Header = () => {
     const router = useRouter()
     const [ token, setToken ] = useRecoilState(userToken);
 
-    const isLogin = useCallback(() => {
-        return token ? true : false;
+    const isLogin = useMemo(() => {
+        return token.accessToken ? true : false;
     }, [ token ]);
 
-    const logoutUser = async () => {
-        const { message, status } = await logout();
-
-        if(status === 200) {
-            setToken({
-                accessToken: "",
-                tokenType: ""
-            });
-
-            router.push('/');
-        }
-    }
+    const handleClick = () => userLogout({token: token.accessToken, router: router, setToken: setToken});
 
     return (
         <header className="flex text-center items-center justify-between  w-auto h-24 shadow-xl">
@@ -39,12 +27,12 @@ export const Header = () => {
             <div className="flex h-full w-40 items-center bg-red-100">
                 <div className="mx-auto">
                     { isLogin
-                        ?   <Link href="/login">
+                        ?   <div onClick={ handleClick }>
+                                logout
+                            </div> 
+                        :   <Link href="/login">
                                 <a>login</a>
                             </Link> 
-                        :   <div onClick={logoutUser}>
-                                logout
-                            </div>
                     }
                 </div>
             </div>

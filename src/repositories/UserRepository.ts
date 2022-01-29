@@ -54,15 +54,20 @@ export const login = async (data: LoginInput) => {
     }
 }
 
-export const logout = async () => {
+export const logout = async (token: string) => {
     try {
-        const res: AxiosResponse<{message: string, status: number}> = await axios.post(config.apiPath + 'api/v1/logout');
+        const res: AxiosResponse<{message: string, status: number}> = await axios.post(config.apiPath + 'api/v1/logout', null, {
+            headers : {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
         const message = res.data.message;
         const status = res.data.status;
         return { message, status }
     } catch(e) {
-        console.log(e)
+        await console.log(e)
         const message = 'miss logout';
         const status = 500;
 
