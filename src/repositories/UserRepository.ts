@@ -38,7 +38,7 @@ type Login = () => Promise<{message: string, status: number, token: string} | un
 export const login = async (data: LoginInput) => {
     try {
         const res: AxiosResponse<{message: string, status: number, token: string}> = await axios.post(config.apiPath + "api/login", data);
-        
+
         const message = res.data.message;
         const status = res.data.status;
         const token = res.data.token;
@@ -52,6 +52,28 @@ export const login = async (data: LoginInput) => {
         
         return { message, status, token }
     }
+}
+
+export const logout = async (token: string) => {
+    try {
+        const res: AxiosResponse<{message: string, status: number}> = await axios.post(config.apiPath + 'api/v1/logout', null, {
+            headers : {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const message = res.data.message;
+        const status = res.data.status;
+        return { message, status }
+    } catch(e) {
+        await console.log(e)
+        const message = 'miss logout';
+        const status = 500;
+
+        return { message, status }
+    }
+
 }
 
 /**
