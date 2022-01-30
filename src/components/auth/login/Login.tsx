@@ -3,10 +3,9 @@ import {  useRecoilState } from "recoil";
 import { userToken } from "src/store/atoms/UserState";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NextRouter, useRouter } from 'next/router'
-import Link from "next/link"
 import { PrimaryButton } from "src/components/ui/button/PrimaryButton";
-import { login } from "src/repositories/UserRepository";
 import type { LoginInput } from "src/domains/Inorganic/types/FormTypes"
+import { userLogin } from "src/domains/user/UseCase/UserLogin";
 
 export const Login: VFC = () => {
     const [ token, setToken ] = useRecoilState(userToken);
@@ -22,21 +21,7 @@ export const Login: VFC = () => {
         shouldFocusError: false
     });
 
-    const onSubmit: SubmitHandler<LoginInput> = async (data: LoginInput): Promise<void> => {
-        const { message, status, token } = await login(data);
-        
-        if(status === 200) {
-            setToken({
-                accessToken: token,
-                tokenType: "bear"
-            });
-            
-            alert(message);
-            router.push('/')
-        }
-
-        if(!(status === 200)) alert('ログインに失敗しました');
-    }
+    const onSubmit: SubmitHandler<LoginInput> = (loginInput: LoginInput) => userLogin({loginInput, setToken, router});
 
     return (
         <form className="text-center mt-24" >

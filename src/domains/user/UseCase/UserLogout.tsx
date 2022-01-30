@@ -11,7 +11,7 @@ type UserLogout = {
     }>;
 }
 
-export const userLogout = async (values: UserLogout) => {
+export const userLogout = async <T extends UserLogout>(values: T) => {
     const{ token, router, setToken } = values;
     const { message, status } = await logout(values.token);
 
@@ -31,6 +31,6 @@ export const userLogout = async (values: UserLogout) => {
         });
 
         alert("logoutしました");
-        router.push('/');
+        router.push('/'); //ここはまた変更したい.
     }
 }
