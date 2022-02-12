@@ -1,8 +1,9 @@
 import { useState, VFC, ChangeEvent } from "react";
+import Image from "next/image";
 
 //ドロップアンドドロップで投稿できるようにする
 const CreateAlbum: VFC = () => {
-    const [ file, setFile ] = useState<string | ArrayBuffer | null | undefined>();
+    const [ content, setContent ] = useState<string>();
 
     const onChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
         //引数のeventObjectがnullの可能性があるから、このガード説でnullだった時の処理を書かないとエラーになる
@@ -11,8 +12,12 @@ const CreateAlbum: VFC = () => {
         const render = new FileReader();
 
         render.onload = e => {
-            setFile(e.target?.result);
+            if(e.target?.result === null) return; 
+            if(e.target?.result === undefined) return;
+            console.log(e.target)
+            setContent(e.target?.result.toString());
         }
+        //eventで追加したファイルのUrl化、これやらないとプレビュー化でない
         render.readAsDataURL(file);
     }
 
@@ -28,7 +33,16 @@ const CreateAlbum: VFC = () => {
                 /> 
             </div>
             <div>
-                <img src={file} />
+                {
+                    content 
+                    ?  <Image 
+                        src={content}
+                        width={ 500 }
+                        height={ 500 }
+                        alt={ "" }
+                    />
+                    : null
+                }
             </div>
         </div>
     );
