@@ -42,6 +42,7 @@ const CreateAlbum: VFC = () => {
                 />
                 <PrimaryButton onClick={onSubmit}>登録</PrimaryButton>
             </form>
+            <h1>test</h1>
         </div>
     );
 }
